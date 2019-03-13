@@ -5,6 +5,10 @@ VisualStudioVersion = 15.0.28307.438
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RssReaderConsole", "RssReaderConsole\RssReaderConsole.csproj", "{FE0F2748-B2CD-479E-96C7-0584802DA1A7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "ClassLibrary1\Services.csproj", "{DB1DAE0E-DE13-40F5-B677-252B5C7A858D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataLayer", "DataLayer\DataLayer.csproj", "{1839709B-1FE1-4C81-BBFA-1E13F9806F06}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{FE0F2748-B2CD-479E-96C7-0584802DA1A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FE0F2748-B2CD-479E-96C7-0584802DA1A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FE0F2748-B2CD-479E-96C7-0584802DA1A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DB1DAE0E-DE13-40F5-B677-252B5C7A858D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB1DAE0E-DE13-40F5-B677-252B5C7A858D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB1DAE0E-DE13-40F5-B677-252B5C7A858D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB1DAE0E-DE13-40F5-B677-252B5C7A858D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1839709B-1FE1-4C81-BBFA-1E13F9806F06}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1839709B-1FE1-4C81-BBFA-1E13F9806F06}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1839709B-1FE1-4C81-BBFA-1E13F9806F06}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1839709B-1FE1-4C81-BBFA-1E13F9806F06}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

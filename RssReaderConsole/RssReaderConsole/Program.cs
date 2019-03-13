@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
+using Services;
 
 namespace RssReaderConsole
 {
@@ -10,6 +8,12 @@ namespace RssReaderConsole
     {
         static void Main(string[] args)
         {
+            var reader = new NewsReader();
+
+            int generalNewsCount = reader.GetGeneralNewsCount();
+            Console.WriteLine($"Was read: {generalNewsCount}");
+
+            Console.ReadLine();
         }
     }
 }
