@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Xml;
 using System.ServiceModel.Syndication;
 using System.Net;
@@ -10,6 +9,9 @@ namespace Services
 {
     public class NewsReader
     {
+        string InterfaxUrl = "https://www.interfax.by/news/feed";
+        string HabrUrl = "https://habr.com/ru/rss/all/all/";
+
         private string GetXml(string url)
         {
             string xml;
@@ -38,9 +40,6 @@ namespace Services
                     Id = item.Id,
                     Title = item.Title.Text,
                     Summary = item.Summary.Text,
-                    Categories = item.Categories
-                        .Select(x => x.Name)
-                        .ToList(),
                     PublishDate = item.PublishDate
                 };
 
@@ -52,16 +51,12 @@ namespace Services
 
         public List<PieceOfNews> GetNewsFromHabr()
         {
-            string url = "https://habr.com/ru/rss/all/all/";
-
-            return GetNewsList(url);
+            return GetNewsList(HabrUrl);
         }
 
         public List<PieceOfNews> GetNewsFromInterfax()
-        {
-            string url = "https://www.interfax.by/news/feed";
-
-            return GetNewsList(url);
+        { 
+            return GetNewsList(InterfaxUrl);
         }
 
         public int GetGeneralNewsCount()

@@ -46,8 +46,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataBaseReader.cs" />
+    <Compile Include="DataBaseWriter.cs" />
     <Compile Include="NewsReader.cs" />
     <Compile Include="Model\PieceOfNews.cs" />
+    <Compile Include="PieceOfNewsConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

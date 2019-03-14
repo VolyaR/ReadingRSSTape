@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="DataBase.cs" />
     <Compile Include="Model\PieceOfNewsDb.cs" />
+    <Compile Include="NewsContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

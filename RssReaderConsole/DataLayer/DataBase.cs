@@ -1,71 +1,79 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 
 using DataLayer.Model;
 
 namespace DataLayer
 {
-    public class NewsContext : DbContext
+    public class DataBase
     {
-        public NewsContext() : base("DbConnection")
+        const string PartOfHabrNewsId = "https://habr.com/";
+        const string PartOfInterfaxNewsId = "https://www.interfax.by/";
+
+        public static IReadOnlyCollection<PieceOfNews> _listOfNews;
+
+        public DataBase()
         {
         }
 
-        public DbSet<PieceOfNewsDb> PieceOfNews { get; set; }
-
-    }
-
-    public class DataBase
-    {
-        public static IReadOnlyCollection<PieceOfNewsDb> _listOfNews;
-
-        public DataBase(IReadOnlyCollection<PieceOfNewsDb> listOfNews)
+        public DataBase(IReadOnlyCollection<PieceOfNews> listOfNews)
         {
             _listOfNews = listOfNews ?? throw new ArgumentNullException(nameof(listOfNews));
         }
 
-        public void Create()
+        public int CreateNewRecordsAndReturnItsCounter()
         {
+            int counter = 0;
             using (NewsContext db = new NewsContext())
             {
-                foreach(var pieceOfNews in _listOfNews)
+                foreach (var pieceOfNews in _listOfNews)
                 {
-                    db.PieceOfNews.Add(pieceOfNews);
+                    // Сравниваю по Id т.к. это более надежный способ.
+                    // В процессе разработки появился баг:
+                    // Ранее в базу записалась новость с title "Первый релиз открытЫго инструмента для тестирования поиска по продуктам"
+                    // В то время, как мы пытались записать "Первый релиз открытОго инструмента для тестирования поиска по продуктам"
+                    // Т.е. Заголовки разные, а Ids одинаковые, на этапе сохранения данных приложение падало с ошибкой
+                    PieceOfNews pieceOfNewsFromDb = db.PieceOfNews
+                        .FirstOrDefault(x => x.Id == pieceOfNews.Id);
+
+                    if (pieceOfNewsFromDb == null)
+                    {
+                        db.PieceOfNews.Add(pieceOfNews);
+                        counter++;
+                    }
                 }
+
+                db.SaveChanges();
             }
+
+            return counter;
         }
 
-        public IReadOnlyCollection<PieceOfNewsDb> ReadHabrNews()
+        public IReadOnlyCollection<PieceOfNews> ReadAllNews()
         {
-            const string partOfHabrNewsId = "https://habr.com/";
-            return ReadSpetialNews(partOfHabrNewsId);
-        }
-
-        public IReadOnlyCollection<PieceOfNewsDb> ReadInterfaxNews()
-        {
-            const string partOfInterfaxNewsId = "https://www.interfax.by/";
-            return ReadSpetialNews(partOfInterfaxNewsId);
-        }
-
-        public IReadOnlyCollection<PieceOfNewsDb> ReadAllNews()
-        {
-            var news = new List<PieceOfNewsDb>();
+            IReadOnlyCollection<PieceOfNews> news;
             using (NewsContext db = new NewsContext())
             {
-                foreach (var piece in db.PieceOfNews)
-                {
-                    news.Add(piece);
-                }
+                news = db.PieceOfNews.ToList();
             }
 
-            return news.AsReadOnly();
+            return news;
         }
 
-        private IReadOnlyCollection<PieceOfNewsDb> ReadSpetialNews(string partOfNewsId)
+        public IReadOnlyCollection<PieceOfNews> ReadHabrNews()
         {
-            IReadOnlyCollection<PieceOfNewsDb> news = ReadAllNews();
+            return ReadSpetialNews(PartOfHabrNewsId);
+        }
+
+        public IReadOnlyCollection<PieceOfNews> ReadInterfaxNews()
+        {
+            return ReadSpetialNews(PartOfInterfaxNewsId);
+        }
+
+        private IReadOnlyCollection<PieceOfNews> ReadSpetialNews(string partOfNewsId)
+        {
+            IReadOnlyCollection<PieceOfNews> news = ReadAllNews();
 
             return news
                 .Where(x => x.Id.Contains(partOfNewsId))

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace Services
 {
@@ -10,8 +9,6 @@ namespace Services
         public string Title { get; set; }
 
         public string Summary { get; set; }
-
-        public List<string> Categories { get; set; }
 
         public DateTimeOffset PublishDate { get; set; }
     }
